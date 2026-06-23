@@ -18,6 +18,7 @@ namespace EstatePredict.Api.Database
         public DbSet<Prediction> Predictions { get; set; }
         public DbSet<MarketData> MarketData { get; set; }
 
+        public DbSet<ApplicationUser> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -9,7 +9,7 @@ namespace EstatePredict.Models.Entities
         public int Id { get; set; }
 
         [Required]
-        public string UserId { get; set; } = string.Empty;
+        public int UserId { get; set; } 
 
         [Required]
         public ApplicationUser User { get; set; } = null!;

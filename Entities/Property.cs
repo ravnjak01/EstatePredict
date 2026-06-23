@@ -7,8 +7,10 @@ namespace EstatePredict.Entities
     public class Property
     {
         public int Id { get; set; }
+     
+        public string Title { get; set; } = string.Empty;
 
-        public string UserId { get; set; } 
+        public int UserId { get; set; } 
         public ApplicationUser User { get; set; } = null!;
 
         public int LocationId { get; set; }
@@ -30,7 +32,9 @@ namespace EstatePredict.Entities
 
         public DateTime CreatedAt { get; set; }
 
-  
+        public string? Description { get; set; }
+
+
         public ICollection<Prediction> Predictions { get; set; } = new List<Prediction>();
     }
 }
