@@ -482,3 +482,34 @@ $RECYCLE.BIN/
 *.swp
 #Local secrets
 appsettings.Development.json
+
+# ==========================================
+# Python & Machine Learning additions
+# ==========================================
+
+# Ignoriši virtuelno okruženje (ovdje žive sve instalirane biblioteke)
+venv/
+ENV/
+env/
+
+# Ignoriši sakupljene podatke i baze koje koristiš za trening (ako ih čuvaš lokalno)
+*.csv
+*.xlsx
+*.json_data
+
+# Ignoriši sačuvane ML modele (oni mogu imati stotine megabajta)
+*.pkl
+*.joblib
+*.onnx
+*.h5
+*.pt
+
+# Ignoriši privremene fajlove koje Python kreira tokom izvršavanja
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Ignoriši Jupyter Notebook privremene fajlove
+.ipynb_checkpoints/
