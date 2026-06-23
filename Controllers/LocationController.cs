@@ -1,6 +1,7 @@
 ﻿using EstatePredict.DTOs;
 using EstatePredict.Requests;
 using EstatePredict.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EstatePredict.Controllers;
@@ -8,6 +9,7 @@ namespace EstatePredict.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
+[Authorize]
 [ProducesResponseType(StatusCodes.Status404NotFound)]
 [ProducesResponseType(StatusCodes.Status409Conflict)]
 public class LocationController : ControllerBase
@@ -21,6 +23,7 @@ public class LocationController : ControllerBase
 
     // GET /api/location
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<LocationDTO>>> GetAll()
     {
         var locations = await _locationService.GetAllAsync();

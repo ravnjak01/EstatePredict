@@ -1,12 +1,14 @@
 ﻿using EstatePredict.DTO;
 using EstatePredict.Requests;
 using EstatePredict.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EstatePredict.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 [Produces("application/json")]
 [ProducesResponseType(StatusCodes.Status404NotFound)]
 [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -21,6 +23,7 @@ public class PropertyController : ControllerBase
 
     // GET api/property
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<PropertyDTO>>> GetAll()
     {
         var properties = await _propertyService.GetAllAsync();

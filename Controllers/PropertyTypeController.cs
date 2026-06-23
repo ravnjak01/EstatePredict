@@ -1,6 +1,7 @@
 ﻿using EstatePredict.DTOs;
 using EstatePredict.Requests;
 using EstatePredict.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EstatePredict.Controllers;
@@ -8,7 +9,7 @@ namespace EstatePredict.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-// 💡 Globalne greške koje middleware može da aktivira za bilo koju rutu
+[Authorize]
 [ProducesResponseType(StatusCodes.Status404NotFound)]
 [ProducesResponseType(StatusCodes.Status409Conflict)]
 public class PropertyTypeController : ControllerBase

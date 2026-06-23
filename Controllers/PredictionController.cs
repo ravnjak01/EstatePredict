@@ -2,12 +2,14 @@
 using EstatePredict.DTOs;
 using EstatePredict.Requests;
 using EstatePredict.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EstatePredict.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 [Produces("application/json")]
 [ProducesResponseType(StatusCodes.Status404NotFound)]
 [ProducesResponseType(StatusCodes.Status409Conflict)]
