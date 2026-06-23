@@ -1,7 +1,7 @@
 ﻿namespace EstatePredict.DTO
 {
     
-    public class PropertyDTO
+    public record PropertyDTO
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;

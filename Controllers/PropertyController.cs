@@ -21,7 +21,6 @@ public class PropertyController : ControllerBase
 
     // GET api/property
     [HttpGet]
-    // 💡 Popravljeno: Sada Swagger zna da vraća listu PropertyDTO-ova
     public async Task<ActionResult<IEnumerable<PropertyDTO>>> GetAll()
     {
         var properties = await _propertyService.GetAllAsync();
@@ -42,7 +41,6 @@ public class PropertyController : ControllerBase
 
     // POST api/property
     [HttpPost]
-    // 💡 Popravljeno: Izbačen try-catch! Middleware sam pretvara ArgumentException u 400 BadRequest
     [ProducesResponseType(typeof(PropertyDTO), StatusCodes.Status201Created)]
     public async Task<ActionResult<PropertyDTO>> Create([FromBody] CreatePropertyRequest request)
     {
@@ -52,7 +50,6 @@ public class PropertyController : ControllerBase
 
     // PUT api/property/{id}
     [HttpPut("{id:int}")]
-    // 💡 Popravljeno: Izbačen try-catch iz istog razloga
     public async Task<ActionResult<PropertyDTO>> Update(int id, [FromBody] UpdatePropertyRequest request)
     {
         var updated = await _propertyService.UpdateAsync(id, request);
@@ -65,7 +62,6 @@ public class PropertyController : ControllerBase
 
     // DELETE api/property/{id}
     [HttpDelete("{id:int}")]
-    // 💡 Popravljeno: Pošto 204 ne vraća objekat, koristimo IActionResult i explicitni status
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Delete(int id)
     {

@@ -1,6 +1,7 @@
 using EstatePredict.Api.Database;
 using EstatePredict.Middleware;
 using EstatePredict.Services;
+using EstatePredict.Services.Implementations;
 using EstatePredict.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,8 @@ builder.Services.AddOpenApi();
 //my services
 builder.Services.AddScoped<IPropertyService,PropertyService>();
 builder.Services.AddScoped<IPredictionService, PredictionService>();
-
+builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 var app = builder.Build();

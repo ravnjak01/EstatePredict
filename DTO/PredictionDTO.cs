@@ -1,6 +1,6 @@
 ﻿namespace EstatePredict.DTOs;
 
-public class PredictionDTO
+public record PredictionDTO
 {
     public int Id { get; set; }
 
