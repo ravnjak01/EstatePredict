@@ -1,6 +1,7 @@
 using EstatePredict.Api.Database;
-using EstatePredict.Interfaces;
+using EstatePredict.Middleware;
 using EstatePredict.Services;
+using EstatePredict.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +30,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+app.UseGlobalExceptionHandler();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
