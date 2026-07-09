@@ -23,7 +23,6 @@ public class PropertyTypeController : ControllerBase
 
     // GET api/propertytype
     [HttpGet]
-    // 😎 Swagger sam zna da ovo vraća 200 OK sa listom objekata
     public async Task<ActionResult<IEnumerable<PropertyTypeDTO>>> GetAll()
     {
         var types = await _propertyTypeService.GetAllAsync();
@@ -32,7 +31,6 @@ public class PropertyTypeController : ControllerBase
 
     // GET api/propertytype/{id}
     [HttpGet("{id:int}")]
-    // 😎 Swagger sam zna da ovo vraća 200 OK sa jednim objektom
     public async Task<ActionResult<PropertyTypeDTO>> GetById(int id)
     {
         var propertyType = await _propertyTypeService.GetByIdAsync(id);
@@ -45,8 +43,6 @@ public class PropertyTypeController : ControllerBase
 
     // POST api/propertytype
     [HttpPost]
-    // 💡 Pošto CreatedAtAction vraća 201 (a ne 200), ovdje je korisno ostaviti ovaj atribut
-    // da bi Swagger znao tačan tip podatka koji se kreira.
     [ProducesResponseType(typeof(PropertyTypeDTO), StatusCodes.Status201Created)]
     public async Task<ActionResult<PropertyTypeDTO>> Create([FromBody] CreatePropertyTypeRequest request)
     {
@@ -68,8 +64,6 @@ public class PropertyTypeController : ControllerBase
 
     // DELETE api/propertytype/{id}
     [HttpDelete("{id:int}")]
-    // 💡 Pošto NoContent() ne vraća nikakav objekat (tijelo je prazno), 
-    // ovdje koristimo običan IActionResult i eksplicitno kažemo da je to 204.
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Delete(int id)
     {
