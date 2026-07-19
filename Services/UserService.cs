@@ -33,8 +33,8 @@ public class UserService : IUserService
             FirstName = request.FirstName,
             LastName = request.LastName,
             Email = request.Email.ToLower(),
-            PasswordHash = BC.HashPassword(request.Password), // Sigurno heširanje lozinke
-            Role = "User", // Defaultna uloga za novoregistrovane
+            PasswordHash = BC.HashPassword(request.Password), 
+            Role = "User", 
             CreatedAt = DateTime.UtcNow
         };
 

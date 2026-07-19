@@ -1,21 +1,26 @@
 import argparse
 import json
 import sys
-
 import pandas as pd
 import joblib
 
 MODEL_PATH = "models/price_model.pkl"
 
 REQUIRED_FIELDS = [
-    "Area", "NumberOfRooms", "YearBuilt", "PropertyTypeId", "LocationId", "TargetYear"
+    "Area", 
+    "NumberOfRooms", 
+    "YearBuilt", 
+    "PropertyType", 
+    "Condition",      
+    "LocationId", 
+    "HasParking",     
+    "HasLift",        
+    "TargetYear"
 ]
-
 _pipeline = None
 
 
 def load_model():
-   
     global _pipeline
     if _pipeline is None:
         _pipeline = joblib.load(MODEL_PATH)
@@ -30,36 +35,36 @@ def predict_price(property_data: dict) -> dict:
 
     pipeline = load_model()
     
-    # 2. Extract values to compute required dynamic features
+    # Extract values to compute required dynamic features
     target_year = int(property_data["TargetYear"])
     year_built = int(property_data["YearBuilt"])
     area = float(property_data["Area"])
-    
-    # 3. Calculate PropertyAge dynamically as per project rules
+    rooms = int(property_data["NumberOfRooms"])
+    location_id = int(property_data["LocationId"])
+    property_type_id = int(property_data["PropertyTypeId"])
     property_age = target_year - year_built
 
-    # 4. Prepare data dictionary with features matching your trained model pipeline
-    # (Note: If your model was trained on 'PropertyAge', pass it here)
     feature_data = {
         "Area": area,
-        "NumberOfRooms": property_data["NumberOfRooms"],
+        "NumberOfRooms": rooms,
         "YearBuilt": year_built,
         "PropertyAge": property_age, 
-        "PropertyTypeId": property_data["PropertyTypeId"],
-        "LocationId": property_data["LocationId"],
+        "PropertyTypeId": property_type_id,
+        "LocationId": location_id,
+        "Condition": property_data["Condition"],
+        "HasParking": int(property_data["HasParking"]),
+        "HasLift": int(property_data["HasLift"]),
         "TargetYear": target_year
     }
     
     df = pd.DataFrame([feature_data])
 
-    # 5. Make the prediction
+    # Make the prediction
     predicted_price = float(pipeline.predict(df)[0])
     
-    # Calculate extra fields required by the project specifications
     price_per_sqm = predicted_price / area if area > 0 else 0
-    confidence_score = 0.85 # Placeholder or calculated value
+    confidence_score = 0.85 
 
-    # Return structured dict to match FastAPI response requirements
     return {
         "PredictedPrice": round(predicted_price, 2),
         "PredictedPricePerSquareMeter": round(price_per_sqm, 2),
@@ -97,15 +102,14 @@ if __name__ == "__main__":
             "Nisu proslijeđeni podaci. Koristi --json ili --file.\n"
             "Primjer: python predict.py --json "
             '\'{"Area": 65, "NumberOfRooms": 3, "YearBuilt": 2005, '
-            '"PropertyType": "Stan", "Condition": "Dobro stanje", '
-            '"Country": "Bosna i Hercegovina", "City": "Sarajevo", '
-            '"Municipality": "Centar", "HasParking": 1, "HasLift": 1}\''
+            '"PropertyTypeId": 1, "Condition": "Dobro stanje", '
+            '"LocationId": 4, "HasParking": 1, "HasLift": 1, "TargetYear": 2030}\''
         )
         sys.exit(1)
 
     try:
-        price = predict_price(input_data)
-        print(f"Predviđena cijena: {price:,.2f} KM")
+        results = predict_price(input_data)
+        print(f"Predviđena cijena: {results['PredictedPrice']:,.2f} KM")
     except ValueError as e:
         print(f"Greška: {e}")
         sys.exit(1)
