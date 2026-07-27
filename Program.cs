@@ -67,7 +67,7 @@ builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPropertyExportService, PropertyExportService>();
 builder.Services.AddScoped<IJtokenService, JtokenService>();
-
+builder.Services.AddScoped<IPropertyTypeService, PropertyTypeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

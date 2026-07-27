@@ -1,10 +1,8 @@
-import axios from "axios";
 import type { CreatePropertyRequest, PropertyDTO } from "../models/property";
-
-const API_URL='http://localhost:5151/api/property';
+import api from "../interceptor/axios_interceptor";
 
 
 export const createProperty = async (data:CreatePropertyRequest) => {
-  const response = await axios.post(`${API_URL}`, data);
+  const response = await api.post(`/property`, data);
   return response.data;
 };
