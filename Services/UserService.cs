@@ -49,8 +49,7 @@ public class UserService : IUserService
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == request.Email.ToLower());
 
         if (user is null || !BC.Verify(request.Password, user.PasswordHash))
-            throw new UnauthorizedAccessException("Invalid email or password.");
-
+            return null;
         var userDto = new UserDTO(user.Id, user.FirstName, user.LastName, user.Email, user.Role, user.CreatedAt);
 
         var token = _jtokenService.CreateToken(user);

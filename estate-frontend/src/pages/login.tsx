@@ -18,11 +18,11 @@ const LoginPage = () => {
 
         try {
             await login(email, password);
-            navigate('/propertyFomr'); 
+            navigate('/propertyForm'); 
         } catch (err) {
-            const axiosError=err as AxiosError<{detail?:string}>
+            const axiosError=err as AxiosError<{message?:string}>
             // Gracefully catch 400 or 401 validation/auth errors from the API
-            setError(axiosError.response?.data?.detail || 'Invalid email or password. Please try again.');
+            setError(axiosError.response?.data?.message || 'Invalid email or password. Please try again.');
         } finally {
             setLoading(false);
         }
