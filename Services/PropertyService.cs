@@ -7,10 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EstatePredict.Services;
 
-/// <summary>
-/// Handles all business logic related to properties.
-/// DbContext is only accessed here — never in controllers.
-/// </summary>
+
 public class PropertyService : IPropertyService
 {
     private readonly EstatePredictContext _db;
@@ -20,9 +17,7 @@ public class PropertyService : IPropertyService
         _db = db;
     }
 
-    // ------------------------------------------------------------------ //
-    //  READ
-    // ------------------------------------------------------------------ //
+
 
     public async Task<IEnumerable<PropertyDTO>> GetAllAsync()
     {
@@ -39,10 +34,6 @@ public class PropertyService : IPropertyService
         var property = await FindWithRelationsAsync(id);
         return property is null ? null : MapToDto(property);
     }
-
-    // ------------------------------------------------------------------ //
-    //  WRITE
-    // ------------------------------------------------------------------ //
 
     public async Task<PropertyDTO> CreateAsync(CreatePropertyRequest request)
     {
@@ -64,7 +55,6 @@ public class PropertyService : IPropertyService
         _db.Properties.Add(property);
         await _db.SaveChangesAsync();
 
-        // Reload with navigation properties for the response DTO
         await _db.Entry(property).Reference(p => p.Location).LoadAsync();
         await _db.Entry(property).Reference(p => p.PropertyType).LoadAsync();
 
@@ -94,7 +84,6 @@ public class PropertyService : IPropertyService
 
         await _db.SaveChangesAsync();
 
-        // Refresh navigation properties if FKs changed
         await _db.Entry(property).Reference(p => p.Location).LoadAsync();
         await _db.Entry(property).Reference(p => p.PropertyType).LoadAsync();
 

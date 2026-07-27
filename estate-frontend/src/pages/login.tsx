@@ -18,7 +18,7 @@ const LoginPage = () => {
 
         try {
             await login(email, password);
-            navigate('/predict'); // Redirect to estimation calculator upon success
+            navigate('/propertyFomr'); 
         } catch (err) {
             const axiosError=err as AxiosError<{detail?:string}>
             // Gracefully catch 400 or 401 validation/auth errors from the API
@@ -89,7 +89,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   input: { 
         width: '100%', 
         padding: '10px', 
-        boxSizing: 'border-box', // TypeScript now knows this must be a valid CSS value
+        boxSizing: 'border-box', 
         border: '1px solid #cbd5e0', 
         borderRadius: '4px', 
         fontSize: '16px' 

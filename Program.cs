@@ -42,8 +42,17 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddScoped<IJtokenService, JtokenService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -57,6 +66,7 @@ builder.Services.AddScoped<IPredictionService, PredictionService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPropertyExportService, PropertyExportService>();
+builder.Services.AddScoped<IJtokenService, JtokenService>();
 
 var app = builder.Build();
 
@@ -70,6 +80,7 @@ if (app.Environment.IsDevelopment())
 app.UseGlobalExceptionHandler();
 app.UseHttpsRedirection();
 
+app.UseCors("AllowReactApp");
 app.UseAuthentication();
 app.UseAuthorization();
 
