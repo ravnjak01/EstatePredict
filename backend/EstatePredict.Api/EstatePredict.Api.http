@@ -1,0 +1,6 @@
+@EstatePredict.Api_HostAddress = http://localhost:5155
+
+GET {{EstatePredict.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

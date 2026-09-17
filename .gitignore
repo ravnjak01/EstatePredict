@@ -1,0 +1,121 @@
+# =========================
+# .NET / Visual Studio
+# =========================
+
+**/bin/
+**/obj/
+**/.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# =========================
+# ASP.NET / .NET
+# =========================
+
+# Local settings / secrets
+appsettings.Local.json
+appsettings.*.Local.json
+
+# User secrets
+secrets.json
+
+# Logs
+*.log
+logs/
+
+# =========================
+# Environment variables
+# =========================
+
+.env
+.env.*
+!.env.example
+
+# =========================
+# Python
+# =========================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python packaging
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# =========================
+# Machine Learning
+# =========================
+
+# Trained models
+*.pkl
+*.joblib
+*.pickle
+
+# ML generated files
+ml/models/
+ml/output/
+ml/artifacts/
+
+# =========================
+# Node / React
+# =========================
+
+node_modules/
+.npm/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+
+# Vite
+.vite/
+
+# =========================
+# OS generated files
+# =========================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# =========================
+# Temporary files
+# =========================
+
+*.tmp
+*.temp
+*.swp
+*.swo
