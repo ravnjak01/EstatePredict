@@ -26,6 +26,16 @@ builder.Services.AddHttpClient<IPredictionService, PredictionService>(client =>
 {
     client.BaseAddress = new Uri("http://localhost:8000/");
 });
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact",
+        policy => policy.WithOrigins("http://localhost:5173") // Promijeni po potrebi
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -40,7 +50,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowReact");
 
 
 
