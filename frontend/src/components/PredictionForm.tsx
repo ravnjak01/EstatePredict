@@ -1,13 +1,12 @@
-
 import { useEffect, useState } from "react";
 import { getLocations } from "../services/locationService";
 import { getPropertyTypes } from "../services/propertyTypeService";
 import type { PropertyType } from "../models/propertyType";
 import type { Location } from "../models/location";
+import "./PredictionForm.css";
 
 import type { PredictionRequest, PredictionResponse } from "../models/prediction";
 import { predictPrice } from "../services/predictionService";
-
 
 const PredictionForm = () => {
   const [locations, setLocations] = useState<Location[]>([]);
@@ -49,9 +48,7 @@ const PredictionForm = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
 
@@ -70,11 +67,9 @@ const PredictionForm = () => {
     }));
   };
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(formData);
     setLoading(true);
     setError("");
     setPrediction(null);
@@ -91,106 +86,101 @@ const PredictionForm = () => {
   };
 
   return (
-    <div>
-      <h1>Property Price Prediction</h1>
+    <div className="prediction-container">
+      <h1 className="prediction-title">Property Price Prediction</h1>
 
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Area (m²)</label>
-          <input
-            type="number"
-            name="area"
-            value={formData.area}
-            onChange={handleChange}
-            min="1"
-            required
-          />
+        <div className="form-grid">
+          <div className="form-group">
+            <label>Area (m²)</label>
+            <input
+              type="number"
+              name="area"
+              value={formData.area}
+              onChange={handleChange}
+              min="1"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Number of rooms</label>
+            <input
+              type="number"
+              name="numberOfRooms"
+              value={formData.numberOfRooms}
+              onChange={handleChange}
+              min="1"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Year built</label>
+            <input
+              type="number"
+              name="yearBuilt"
+              value={formData.yearBuilt}
+              onChange={handleChange}
+              min="1800"
+              max={new Date().getFullYear()}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Condition</label>
+            <select
+              name="condition"
+              value={formData.condition}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select condition</option>
+              <option value="New">New</option>
+              <option value="Excellent">Excellent</option>
+              <option value="Good">Good</option>
+              <option value="Needs renovation">Needs renovation</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Location</label>
+            <select
+              name="locationId"
+              value={formData.locationId}
+              onChange={handleChange}
+              required
+            >
+              <option value={0}>Select location</option>
+              {locations.map((location) => (
+                <option key={location.id} value={location.id}>
+                  {location.city} - {location.municipality}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Property type</label>
+            <select
+              name="propertyTypeId"
+              value={formData.propertyTypeId}
+              onChange={handleChange}
+              required
+            >
+              <option value={0}>Select property type</option>
+              {propertyTypes.map((propertyType) => (
+                <option key={propertyType.id} value={propertyType.id}>
+                  {propertyType.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label>Number of rooms</label>
-          <input
-            type="number"
-            name="numberOfRooms"
-            value={formData.numberOfRooms}
-            onChange={handleChange}
-            min="1"
-            required
-          />
-        </div>
-
-        <div>
-          <label>Year built</label>
-          <input
-            type="number"
-            name="yearBuilt"
-            value={formData.yearBuilt}
-            onChange={handleChange}
-            min="1800"
-            max={new Date().getFullYear()}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Condition</label>
-          <select
-            name="condition"
-            value={formData.condition}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select condition</option>
-            <option value="New">New</option>
-            <option value="Excellent">Excellent</option>
-            <option value="Good">Good</option>
-            <option value="Needs renovation">
-              Needs renovation
-            </option>
-          </select>
-        </div>
-
-        <div>
-          <label>Location</label>
-          <select
-            name="locationId"
-            value={formData.locationId}
-            onChange={handleChange}
-            required
-          >
-            <option value={0}>Select location</option>
-
-            {locations.map((location) => (
-              <option key={location.id} value={location.id}>
-                {location.city} - {location.municipality}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label>Property type</label>
-          <select
-            name="propertyTypeId"
-            value={formData.propertyTypeId}
-            onChange={handleChange}
-            required
-          >
-            <option value={0}>Select property type</option>
-
-            {propertyTypes.map((propertyType) => (
-              <option
-                key={propertyType.id}
-                value={propertyType.id}
-              >
-                {propertyType.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label>
+        <div className="checkbox-group">
+          <label className="checkbox-label">
             <input
               type="checkbox"
               name="hasParking"
@@ -199,10 +189,8 @@ const PredictionForm = () => {
             />
             Has parking
           </label>
-        </div>
 
-        <div>
-          <label>
+          <label className="checkbox-label">
             <input
               type="checkbox"
               name="hasLift"
@@ -213,24 +201,22 @@ const PredictionForm = () => {
           </label>
         </div>
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" className="submit-btn" disabled={loading}>
           {loading ? "Predicting..." : "Predict price"}
         </button>
       </form>
 
-      {error && <p>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       {prediction && (
-        <div>
+        <div className="result-card">
           <h2>Prediction result</h2>
-
           <p>
             Predicted price:{" "}
             <strong>
               {prediction.predictedPrice.toLocaleString()} €
             </strong>
           </p>
-
           <p>
             Price per m²:{" "}
             <strong>
@@ -244,4 +230,3 @@ const PredictionForm = () => {
 };
 
 export default PredictionForm;
-
