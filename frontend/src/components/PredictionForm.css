@@ -120,3 +120,16 @@
   margin: 0.5rem 0;
   color: #2d3748;
 }
+
+/* Hide number input arrows in Chrome, Edge and Safari */
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide number input arrows in Firefox */
+.number-input {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
