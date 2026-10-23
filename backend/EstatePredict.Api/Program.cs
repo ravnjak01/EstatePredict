@@ -1,8 +1,9 @@
 using EstatePredict.Api.Data;
-using Microsoft.EntityFrameworkCore;
 using EstatePredict.Api.Data;
 using EstatePredict.Api.Interfaces;
 using EstatePredict.Api.Services;
+using EstatePredict.Data.Seeders;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -31,7 +32,7 @@ builder.Services.AddHttpClient<IPredictionService, PredictionService>(client =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact",
-        policy => policy.WithOrigins("http://localhost:5173") // Promijeni po potrebi
+        policy => policy.WithOrigins("http://localhost:5173") 
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
@@ -40,6 +41,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider
+        .GetRequiredService<EstatePredictContext>();
+
+    await PropertyTypeSeeder.SeedAsync(context);
+    await LocationSeeder.SeedAsync(context);
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

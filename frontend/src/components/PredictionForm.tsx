@@ -93,39 +93,43 @@ const PredictionForm = () => {
         <div className="form-grid">
           <div className="form-group">
             <label>Area (m²)</label>
-            <input
-              type="number"
-              name="area"
-              value={formData.area}
-              onChange={handleChange}
-              min="1"
-              required
-            />
+           <input
+            type="number"
+            className="number-input"
+            name="area"
+            value={formData.area}
+            onChange={handleChange}
+            min="1"
+            step="any"
+            required
+          />
           </div>
 
           <div className="form-group">
             <label>Number of rooms</label>
-            <input
-              type="number"
-              name="numberOfRooms"
-              value={formData.numberOfRooms}
-              onChange={handleChange}
-              min="1"
-              required
-            />
+           <input
+            type="number"
+            className="number-input"
+            name="numberOfRooms"
+            value={formData.numberOfRooms}
+            onChange={handleChange}
+            min="1"
+            step="0.5"
+            required
+          />
           </div>
 
           <div className="form-group">
             <label>Year built</label>
-            <input
-              type="number"
-              name="yearBuilt"
-              value={formData.yearBuilt}
-              onChange={handleChange}
-              min="1800"
-              max={new Date().getFullYear()}
-              required
-            />
+              <input
+                type="number"
+                name="yearBuilt"
+                value={formData.yearBuilt}
+                onChange={handleChange}
+                min="1800"
+                max={new Date().getFullYear()}
+                required
+              />
           </div>
 
           <div className="form-group">
