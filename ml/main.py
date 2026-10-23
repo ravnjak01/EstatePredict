@@ -1,7 +1,26 @@
-from fastapi import FastAPI
+# ml/main.py
+
+import os
+import joblib
+import pandas as pd
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-app = FastAPI()
+MODEL_PATH = os.path.join("models", "estate_model.pkl")
+
+app = FastAPI(title="EstatePredict ML API")
+
+model = None
+
+
+@app.on_event("startup")
+def load_model():
+    global model
+    if not os.path.exists(MODEL_PATH):
+        raise RuntimeError(
+            f"Model file not found at '{MODEL_PATH}'. Run train.py first."
+        )
+    model = joblib.load(MODEL_PATH)
 
 
 class PredictionRequest(BaseModel):
@@ -28,10 +47,24 @@ def root():
 
 @app.post("/predict", response_model=PredictionResponse)
 def predict(request: PredictionRequest):
+    if model is None:
+        raise HTTPException(status_code=503, detail="Model is not loaded")
 
-    # Privremeno testna vrijednost
-    predicted_price = 185000
+    # Column names here MUST match the column names used in train.py exactly,
+    # because the saved pipeline's OneHotEncoder was fitted on these exact names.
+    input_df = pd.DataFrame([{
+        "Area": request.area,
+        "NumberOfRooms": request.numberOfRooms,
+        "YearBuilt": request.yearBuilt,
+        "HasParking": request.hasParking,
+        "HasLift": request.hasLift,
+        "Condition": request.condition,
+        "Country": request.country,
+        "City": request.city,
+        "Municipality": request.municipality,
+        "PropertyType": request.propertyType,
+    }])
 
-    return PredictionResponse(
-        predictedPrice=predicted_price
-    )
+    predicted_price = model.predict(input_df)[0]
+
+    return PredictionResponse(predictedPrice=float(predicted_price))

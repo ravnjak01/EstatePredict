@@ -4,7 +4,7 @@ public class PredictionRequest
 {
     public decimal Area { get; set; }
 
-    public int NumberOfRooms { get; set; }
+    public decimal NumberOfRooms { get; set; }
 
     public int YearBuilt { get; set; }
 

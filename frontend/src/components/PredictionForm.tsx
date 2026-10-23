@@ -136,11 +136,11 @@ const PredictionForm = () => {
               onChange={handleChange}
               required
             >
-              <option value="">Select condition</option>
-              <option value="New">New</option>
-              <option value="Excellent">Excellent</option>
-              <option value="Good">Good</option>
-              <option value="Needs renovation">Needs renovation</option>
+             <option value="">Select condition</option>
+            <option value="New Construction">New Construction</option>
+            <option value="Needs Renovation">Needs Renovation</option>
+            <option value="Renovated">Renovated</option>
+            <option value="Good Condition">Good Condition</option>
             </select>
           </div>
 
@@ -152,7 +152,7 @@ const PredictionForm = () => {
               onChange={handleChange}
               required
             >
-              <option value={0}>Select location</option>
+              <option value={0}>Select location </option>
               {locations.map((location) => (
                 <option key={location.id} value={location.id}>
                   {location.city} - {location.municipality}
